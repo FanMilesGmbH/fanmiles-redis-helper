@@ -2,15 +2,13 @@
 
 // Libraries
 const _ = require('lodash');
-const {
-    expect
-} = require('chai');
+const expect = require('chai').expect;
 const sinon = require('sinon');
 const Promise = require('bluebird');
 
 const async = Promise.coroutine;
 
-const config = require('../../config.local');
+const config = require('../../config');
 
 // Systems under test
 const redisHelper = require('../../src/redisHelper');
