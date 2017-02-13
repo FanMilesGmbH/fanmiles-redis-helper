@@ -10,11 +10,13 @@ const Promise = require('bluebird');
 
 const async = Promise.coroutine;
 
+const config = require('../../config.local');
+
 // Systems under test
 const redisHelper = require('../../src/redisHelper');
 const getWriteEvent = redisHelper.getWriteEvent;
 const getGetEvents = redisHelper.getGetEvents;
-const client = redisHelper.getInstances().client;
+const client = redisHelper.getInstances(config).client;
 // Tests
 
 context('Integration tests for the redis helpers', () => {

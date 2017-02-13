@@ -4,7 +4,6 @@ Helper functions for nodejs redis client.
 # Table of Contents
 
 - [About](#about)
-- [Configuration](#configuration)
 - [Running tests](#running-tests)
 - [Usage](#usage)
 
@@ -12,10 +11,6 @@ Helper functions for nodejs redis client.
 Redis helper is used as a wrapper around nodejs redis client. At FanMiles we used Redis as event aggregator.
 The `writeEvent` function writes the event to the Redis.
 The `getEvents` function retrieves all the events up until the passed timestamp and removes them from Redis.
-
-## <a name="configuration">Configuration</a>
-
-Copy `config.local.example.js` to `config.local.js` and change the variables according to your environment.
 
 ## <a name="running-tests">Running tests</a>
 
@@ -30,7 +25,13 @@ npm test
 Example usage:
 
 ```javascript
-const redisHelper = require('fanmiles-redis-helper').getInstances();
+const redisHelper = require('fanmiles-redis-helper').getInstances({
+    sortedEventSetIdentifier: 'events-identifier',
+    clientConfig: {
+        host: 'localhost',  // redis ip
+        port: '6379'        // redis port
+    }
+});
 
 const firstEvent = {
     bucket: 'sample-bucket',    // to which bucket does this event belong to

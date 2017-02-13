@@ -8,11 +8,6 @@ const async = Promise.coroutine;
 
 Promise.promisifyAll(redis.RedisClient.prototype);
 
-// Constants
-const redisConfig = require('../config');
-const clientConfig = redisConfig.clientConfig;
-const sortedEventSetIdentifier = redisConfig.sortedEventSetIdentifier;
-
 // Handlers
 
 function getWriteEvent(deps) {
@@ -74,15 +69,14 @@ const getEventIdentifier = (index) => `events:${index}`;
 
 module.exports = {
     getEventIdentifier,
-    sortedEventSetIdentifier,
     getWriteEvent,
     getGetEvents,
-    getInstances: () => {
-        const client = redis.createClient(clientConfig);
+    getInstances: (config) => {
+        const client = redis.createClient(config);
 
         const dependencies = {
             client,
-            sortedEventSetIdentifier,
+            sortedEventSetIdentifier: config.sortedEventSetIdentifier,
             getEventIdentifier
         };
 
