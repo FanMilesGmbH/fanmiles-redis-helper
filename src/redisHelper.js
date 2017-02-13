@@ -72,7 +72,7 @@ module.exports = {
     getWriteEvent,
     getGetEvents,
     getInstances: (config) => {
-        const client = redis.createClient(config);
+        const client = redis.createClient(config.clientConfig);
 
         const dependencies = {
             client,
