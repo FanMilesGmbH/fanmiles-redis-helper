@@ -1,0 +1,30 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Helper functions for nodejs redis client.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --opts tests/mocha-integration.opts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FanMilesGmbH/fanmiles-redis-helper.git"
+  },
+  "author": "FanMiles",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FanMilesGmbH/fanmiles-redis-helper/issues"
+  },
+  "homepage": "https://github.com/FanMilesGmbH/fanmiles-redis-helper#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "lodash": "^4.17.4",
+    "redis": "^2.6.5"
+  }
+}

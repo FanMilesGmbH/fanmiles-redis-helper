@@ -1,0 +1,3 @@
+tests/integration/*.js
+--reporter nyan
+--ui bdd
