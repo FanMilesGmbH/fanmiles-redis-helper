@@ -1,5 +1,5 @@
 {
-  "name": "y",
+  "name": "fanmiles-redis-helper",
   "version": "1.0.1",
   "description": "Helper functions for nodejs redis client.",
   "main": "index.js",
