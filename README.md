@@ -1,4 +1,6 @@
 # fanmiles-redis-helper
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/FanMilesGmbH/fanmiles-redis-helper.svg)](https://greenkeeper.io/)
 Helper functions for nodejs redis client.
 
 # Table of Contents
