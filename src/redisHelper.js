@@ -11,7 +11,7 @@ Promise.promisifyAll(redis.RedisClient.prototype);
 
 // Handlers
 
-function getWriteEvent(deps) {
+function createWriteEventMethod(deps) {
   const client = deps.client;
   const sortedEventSetKey = deps.sortedEventSetIdentifier;
   const getEventIdentifier = deps.getEventIdentifier;
@@ -25,11 +25,11 @@ function getWriteEvent(deps) {
   });
 }
 
-function getGetEvents(deps) {
+function createTakeEventsMethod(deps) {
   const client = deps.client;
   const sortedEventSetKey = deps.sortedEventSetIdentifier;
 
-  return async(function* getEvents(timestamp, limit) {
+  return async(function* takeEvents(timestamp, limit) {
     const range = yield client.zrangebyscoreAsync(sortedEventSetKey, 0, timestamp);
 
     return yield Promise.all(
@@ -59,8 +59,8 @@ const getEventIdentifier = index => `events:${index}`;
 
 module.exports = {
   getEventIdentifier,
-  getWriteEvent,
-  getGetEvents,
+  createWriteEventMethod,
+  createTakeEventsMethod,
   getInstances: (config) => {
     const client = redis.createClient(config.clientConfig);
 
@@ -72,8 +72,8 @@ module.exports = {
 
     return {
       client,
-      writeEvent: getWriteEvent(dependencies),
-      getEvents: getGetEvents(dependencies),
+      writeEvent: createWriteEventMethod(dependencies),
+      takeEvents: createTakeEventsMethod(dependencies),
       disconnect: () => client.quit(),
     };
   },

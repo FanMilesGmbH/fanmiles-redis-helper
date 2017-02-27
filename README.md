@@ -57,7 +57,7 @@ yield redisHelper.writeEvent(secondEvent);
 yield redisHelper.writeEvent(thirdEvent);
 
 // retrieve events by timestamp
-const eventsFromRedis = yield redisHelper.getEvents(1488211815515);
+const eventsFromRedis = yield redisHelper.takeEvents(1488211815515);
 // eventsFromRedis content
 //  [{
 //    "bucket": "sample-bucket",
@@ -67,7 +67,7 @@ const eventsFromRedis = yield redisHelper.getEvents(1488211815515);
 
 // retrieve events by timestamp and limit
 
-const eventsFromRedis = yield redisHelper.getEvents(1488211815530, 1);
+const eventsFromRedis = yield redisHelper.takeEvents(1488211815530, 1);
 // eventsFromRedis content
 //  [{
 //    "bucket": "sample-bucket",

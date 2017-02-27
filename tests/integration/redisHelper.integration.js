@@ -11,8 +11,8 @@ const config = require('../../config');
 const async = Promise.coroutine;
 
 // Systems under test
-const getWriteEvent = redisHelper.getWriteEvent;
-const getGetEvents = redisHelper.getGetEvents;
+const createWriteEventMethod = redisHelper.createWriteEventMethod;
+const createTakeEventsMethod = redisHelper.createTakeEventsMethod;
 const client = redisHelper.getInstances(config).client;
 // Tests
 
@@ -26,8 +26,8 @@ context('Integration tests for the redis helpers', () => {
     getEventIdentifier,
   };
 
-  const writeEvent = getWriteEvent(deps);
-  const getEvents = getGetEvents(deps);
+  const writeEvent = createWriteEventMethod(deps);
+  const takeEvents = createTakeEventsMethod(deps);
 
   const bucket = 'bucketName';
 
@@ -87,7 +87,7 @@ context('Integration tests for the redis helpers', () => {
     beforeEach(async(function* beforeEachHandler() {
       yield Promise.all(_.times(numberOfEvents, i => writeEvent(createEvent(i))));
 
-      result = yield getEvents(targetTime);
+      result = yield takeEvents(targetTime);
       allEventsLeftAfterSUT =
         yield client.zrangebyscoreAsync(sortedEventSetIdentifier, 0, numberOfEvents);
     }));
@@ -133,7 +133,7 @@ context('Integration tests for the redis helpers', () => {
     beforeEach(async(function* beforeEachHander() {
       yield Promise.all(_.times(numberOfEvents, i => writeEvent(createEvent(i))));
 
-      result = yield getEvents(targetTime, limitAmount);
+      result = yield takeEvents(targetTime, limitAmount);
       allEventsLeftAfterSUT =
         yield client.zrangebyscoreAsync(sortedEventSetIdentifier, 0, numberOfEvents);
     }));
