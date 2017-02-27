@@ -122,5 +122,48 @@ context('Integration tests for the redis helpers', () => {
 
     });
 
+    context('limit amount of events to take', () => {
+        const numberOfEvents = 10;
+        const targetTime = 5;
+        const limitAmount = 2;
+
+        const getFileKey = (index) => `some-key-${index}`;
+
+        const createEvent = (index) => ({
+            bucket,
+            key: getFileKey(index),
+            timestamp: index
+        });
+
+        let result;
+        let allEventsLeftAfterSUT;
+
+        beforeEach(async(function*() {
+
+            yield Promise.all(
+                _.times(numberOfEvents, i => writeEvent(createEvent(i)))
+            );
+
+            result = yield getEvents(targetTime, limitAmount);
+
+            allEventsLeftAfterSUT = yield client.zrangebyscoreAsync(sortedEventSetIdentifier, 0, numberOfEvents);
+        }));
+
+        afterEach(async(function*() {
+            yield client.delAsync(
+                _.times(numberOfEvents, i => getEventIdentifier(getFileKey(i + targetTime + 1)))
+            );
+        }));
+
+
+        it('should only take the limited number of events', () => {
+            expect(result).to.deep.equal(
+                _.times(limitAmount, i => _.extend(createEvent(i), {
+                    timestamp: `${i}`
+                }))
+            );
+        });
+    });
+
 });
 

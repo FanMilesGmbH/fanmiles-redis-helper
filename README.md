@@ -34,28 +34,44 @@ const redisHelper = require('fanmiles-redis-helper').getInstances({
 });
 
 const firstEvent = {
-    bucket: 'sample-bucket',    // to which bucket does this event belong to
-    key: 'unique-event-key-1',  // just unique event key
-    timestamp: 10               // timestamp used for retrieving
+    bucket: 'sample-bucket',
+    key: 'unique-event-key-1',
+    timestamp: '1488211815510'
 };
 
 const secondEvent = {
-    bucket: 'sample-bucket',    // to which bucket does this event belong to
-    key: 'unique-event-key-2',  // just unique event key
-    timestamp: 20               // timestamp used for retrieving
+    bucket: 'sample-bucket',
+    key: 'unique-event-key-2',
+    timestamp: '1488211815520'
+};
+
+const thirdEvent = {
+    bucket: 'sample-bucket',
+    key: 'unique-event-key-3',
+    timestamp: '1488211815530'
 };
 
 // write some events to Redis
 yield redisHelper.writeEvent(firstEvent);
 yield redisHelper.writeEvent(secondEvent);
+yield redisHelper.writeEvent(thirdEvent);
 
-// retrieve events
-const eventsFromRedis = yield redisHelper.getEvents(15);
+// retrieve events by timestamp
+const eventsFromRedis = yield redisHelper.getEvents(1488211815515);
 // eventsFromRedis content
 //  [{
 //    "bucket": "sample-bucket",
 //    "key": "unique-event-key-1",
-//    "timestamp": "10"
+//    "timestamp": "1488211815510"
 //  }]
 
+// retrieve events by timestamp and limit
+
+const eventsFromRedis = yield redisHelper.getEvents(1488211815530, 1);
+// eventsFromRedis content
+//  [{
+//    "bucket": "sample-bucket",
+//    "key": "unique-event-key-1",
+//    "timestamp": "1488211815510"
+//  }]
 ```

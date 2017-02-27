@@ -36,12 +36,16 @@ function getGetEvents(deps) {
     const client = deps.client;
     const sortedEventSetKey = deps.sortedEventSetIdentifier;
 
-    return async(function*(timestamp) {
+    return async(function*(timestamp, limit) {
 
         const range = yield client.zrangebyscoreAsync(sortedEventSetKey, 0, timestamp);
 
         return yield Promise.all(
-            range.map(eventKey => {
+            range.map((eventKey, index) => {
+
+                if(limit && index >= limit) {
+                    return Promise.resolve(null);
+                }
 
                 return async(function*() {
 
@@ -55,9 +59,10 @@ function getGetEvents(deps) {
                     return result;
 
                 })();
-
             })
-        );
+        ).then((responses) => {
+            return _.filter(responses);
+        });
 
     });
 
