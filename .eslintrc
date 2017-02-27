@@ -1,0 +1,7 @@
+{
+  "extends": "fanmiles",
+
+  "rules": {
+    "strict": "off"
+  }
+}
