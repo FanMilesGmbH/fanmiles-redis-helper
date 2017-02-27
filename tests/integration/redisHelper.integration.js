@@ -128,11 +128,14 @@ context('Integration tests for the redis helpers', () => {
     });
 
     let result;
+    let allEventsLeftAfterSUT;
 
     beforeEach(async(function* beforeEachHander() {
       yield Promise.all(_.times(numberOfEvents, i => writeEvent(createEvent(i))));
 
       result = yield getEvents(targetTime, limitAmount);
+      allEventsLeftAfterSUT =
+        yield client.zrangebyscoreAsync(sortedEventSetIdentifier, 0, numberOfEvents);
     }));
 
     afterEach(async(function* afterEachHandler() {
@@ -149,6 +152,13 @@ context('Integration tests for the redis helpers', () => {
       }));
 
       expect(result).to.deep.equal(expectedEvents);
+    });
+
+    it('should delete the events from the buffer but leave the remaining events untouched', () => {
+      const expectedEvents = _.times(numberOfEvents - limitAmount,
+        i => getEventIdentifier(getFileKey(i + limitAmount)));
+
+      expect(allEventsLeftAfterSUT).to.deep.equal(expectedEvents);
     });
   });
 });
