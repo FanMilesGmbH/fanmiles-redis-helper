@@ -2,17 +2,18 @@
 
 const _ = require('lodash');
 
-let config = {
-    sortedEventSetIdentifier: 'config.local',
-    clientConfig: {
-        host: 'localhost',
-        port: '6379'
-    }
+const config = {
+  sortedEventSetIdentifier: 'config.local',
+  clientConfig: {
+    host: 'localhost',
+    port: '6379',
+  },
 };
 
 try {
-    const localConfig = require('./config.local');
-    _.merge(config, localConfig);
+  // eslint-disable-next-line import/no-unresolved, global-require
+  const localConfig = require('./config.local');
+  _.merge(config, localConfig);
 } catch (e) {
     // missing local config
 }
