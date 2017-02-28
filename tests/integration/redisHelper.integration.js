@@ -13,7 +13,7 @@ const async = Promise.coroutine;
 // Systems under test
 const createWriteEventMethod = redisHelper.createWriteEventMethod;
 const createTakeEventsMethod = redisHelper.createTakeEventsMethod;
-const client = redisHelper.getInstances(config).client;
+const client = redisHelper.getInstance(config).client;
 // Tests
 
 context('Integration tests for the redis helpers', () => {

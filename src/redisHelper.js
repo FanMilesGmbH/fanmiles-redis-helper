@@ -61,7 +61,7 @@ module.exports = {
   getEventIdentifier,
   createWriteEventMethod,
   createTakeEventsMethod,
-  getInstances: (config) => {
+  getInstance: (config) => {
     const client = redis.createClient(config.clientConfig);
 
     const dependencies = {

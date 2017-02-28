@@ -25,7 +25,7 @@ npm test
 Example usage:
 
 ```javascript
-const redisHelper = require('fanmiles-redis-helper').getInstances({
+const redisHelper = require('fanmiles-redis-helper').getInstance({
     sortedEventSetIdentifier: 'events-identifier',
     clientConfig: {
         host: 'localhost',  // redis ip
