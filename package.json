@@ -1,6 +1,6 @@
 {
   "name": "fanmiles-redis-helper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Helper functions for nodejs redis client.",
   "main": "index.js",
   "scripts": {
